@@ -1,3 +1,7 @@
+<img alt="Image" src="https://github.com/user-attachments/assets/99a2e8cc-adc4-4c9a-93d9-a5b5ea6713c5" />
+
+<br>
+
 # Cough Mono
 
 A crisp and sharp monospaced typeface.
