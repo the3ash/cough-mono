@@ -1,4 +1,4 @@
-<img alt="Image" src="https://github.com/user-attachments/assets/88e0aa4c-5741-4fa5-ad95-7da9addb2b5f" />
+<img alt="Image" src="https://github.com/user-attachments/assets/e883d737-0a59-492d-b0d6-db6c33ffc093" />
 
 <br>
 
@@ -18,8 +18,9 @@ A crisp and sharp monospaced typeface.
 - `cv08`: Alternative `1`
 - `cv09`: Dotted `0`
 - `cv10`: Plain `0`
-- `cv11`: Alternative `*`
-- `cv12`: Alternative `:`
+- `cv11`: Alternative `@`
+- `cv12`: Alternative `*`
+- `cv13`: Alternative `:`
 
 ## License
 
