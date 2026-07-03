@@ -8,19 +8,19 @@ A crisp and sharp monospaced typeface.
 
 ## Character Variants
 
-- `cv01`: Alternative `a`
-- `cv02`: Alternative `f`
-- `cv03`: Alternative `f` 2
-- `cv04`: Alternative `i`
-- `cv05`: Alternative `r`
-- `cv06`: Alternative `y`
-- `cv07`: Alternative `Q`
-- `cv08`: Alternative `1`
+- `cv01`: Alt `a`
+- `cv02`: Alt `f` 1
+- `cv03`: Alt `f` 2
+- `cv04`: Alt `i`
+- `cv05`: Alt `r`
+- `cv06`: Alt `y`
+- `cv07`: Alt `Q`
+- `cv08`: Alt `1`
 - `cv09`: Dotted `0`
 - `cv10`: Plain `0`
-- `cv11`: Alternative `@`
-- `cv12`: Alternative `*`
-- `cv13`: Alternative `:`
+- `cv11`: Alt `@`
+- `cv12`: Alt `*`
+- `cv13`: Alt `:`
 
 ## License
 
