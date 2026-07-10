@@ -22,7 +22,7 @@ A crisp and sharp monospaced typeface.
 
 <img alt="Image" src="https://github.com/user-attachments/assets/274edafb-7b95-4b11-af9b-52d4afe1e510" />
 <img alt="Image" src="https://github.com/user-attachments/assets/31d4e221-3ac8-486f-a3c1-4f55d406fafb" />
-<img alt="Image" src="https://github.com/user-attachments/assets/9776e8d6-9b28-442c-b86d-1bcdeba3263d" />
+<img alt="Image" src="https://github.com/user-attachments/assets/923d55d7-57e6-4b31-b0e8-f007873a97f4" />
 <img alt="Image" src="https://github.com/user-attachments/assets/ca08df27-5638-4ac3-b9fa-b3c18c1b187b" />
 
 <br>
