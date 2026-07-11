@@ -18,6 +18,12 @@ A crisp and sharp monospaced typeface.
 - `cv12`: Full-a `@`
 - `cv13`: Six-arm `*`
 
+## Stylistic Sets
+
+- `ss01`: Classic forms
+
+Enables the `cv03`, `cv04`, `cv05`, `cv06`, `cv07`, and `cv08` character variants together.
+
 <br>
 
 <img alt="Image" src="https://github.com/user-attachments/assets/a6e098c2-eaa2-481f-9449-14eda28a4be9" />
