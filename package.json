@@ -1,0 +1,35 @@
+{
+  "name": "@the3ash/cough-mono",
+  "version": "1.25.0",
+  "description": "A crisp and sharp monospaced typeface.",
+  "license": "OFL-1.1",
+  "author": "3ASH",
+  "homepage": "https://github.com/the3ash/cough-mono#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the3ash/cough-mono.git"
+  },
+  "bugs": {
+    "url": "https://github.com/the3ash/cough-mono/issues"
+  },
+  "files": [
+    "fonts",
+    "index.css",
+    "OFL.txt",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./index.css",
+    "./index.css": "./index.css",
+    "./fonts/CoughMono-Regular.woff2": "./fonts/CoughMono-Regular.woff2",
+    "./fonts/CoughMono-Regular.ttf": "./fonts/CoughMono-Regular.ttf",
+    "./fonts/CoughMono-Regular.otf": "./fonts/CoughMono-Regular.otf"
+  },
+  "style": "index.css",
+  "sideEffects": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

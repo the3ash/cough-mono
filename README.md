@@ -2,6 +2,22 @@
 
 A crisp and sharp monospaced typeface.
 
+## Use via npm
+
+```sh
+npm i @the3ash/cough-mono
+```
+
+```js
+import "@the3ash/cough-mono";
+```
+
+```css
+body {
+  font-family: "Cough Mono", monospace;
+}
+```
+
 ## Character Variants
 
 - `cv01`: Single-story `a`
