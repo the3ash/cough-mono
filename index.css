@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Cough Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url("./fonts/CoughMono-Regular.woff2") format("woff2"),
+    url("./fonts/CoughMono-Regular.ttf") format("truetype");
+}

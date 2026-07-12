@@ -1,4 +1,5 @@
 node_modules
+*.tgz
 .pnpm-store
 dist
 dist-ssr
@@ -12,4 +13,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
