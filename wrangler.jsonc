@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "cough-mono",
+  "name": "cough-mono-cdn",
   "compatibility_date": "2026-07-12",
   "assets": {
     "directory": "./dist"
