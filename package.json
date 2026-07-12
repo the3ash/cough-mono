@@ -12,6 +12,11 @@
   "bugs": {
     "url": "https://github.com/the3ash/cough-mono/issues"
   },
+  "scripts": {
+    "build:cdn": "node scripts/build-cdn.mjs",
+    "dev:cdn": "npm run build:cdn && wrangler dev",
+    "deploy:cdn": "npm run build:cdn && wrangler deploy"
+  },
   "files": [
     "fonts",
     "cough-mono.css",
@@ -31,5 +36,8 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "wrangler": "4.110.0"
   }
 }
