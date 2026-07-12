@@ -2,6 +2,14 @@
 
 A crisp and sharp monospaced typeface.
 
+Download the .zip (otf, ttf, woff2) from [Releases](https://github.com/the3ash/cough-mono/releases).
+
+## Use via CDN
+
+```html
+<link rel="stylesheet" href="https://cough-mono.the3ash.com/cough-mono.css">
+```
+
 ## Use via npm
 
 ```sh
