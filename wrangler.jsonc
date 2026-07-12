@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cough-mono",
+  "compatibility_date": "2026-07-12",
+  "assets": {
+    "directory": "./dist"
+  },
+  "routes": [
+    {
+      "pattern": "cough-mono.the3ash.com",
+      "custom_domain": true
+    }
+  ]
+}

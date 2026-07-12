@@ -72,8 +72,12 @@ jobs:
       - name: Publish npm package
         run: npm publish --provenance --access public
 
-  release-github:
+  deploy-cdn:
     needs: publish-npm
+    uses: ./.github/workflows/deploy-cdn.yml
+
+  release-github:
+    needs: deploy-cdn
     runs-on: ubuntu-latest
     permissions:
       contents: write
