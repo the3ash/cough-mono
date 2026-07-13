@@ -7,7 +7,14 @@ Download the .zip (otf, ttf, woff2) from [Releases](https://github.com/the3ash/c
 ## Use via CDN
 
 ```html
+<link rel="preconnect" href="https://cough-mono.the3ash.com" crossorigin />
 <link rel="stylesheet" href="https://cough-mono.the3ash.com/cough-mono.css">
+```
+
+```css
+body {
+  font-family: "Cough Mono", ui-monospace, monospace;
+}
 ```
 
 ## Use via npm
@@ -22,7 +29,7 @@ import "@the3ash/cough-mono";
 
 ```css
 body {
-  font-family: "Cough Mono", monospace;
+  font-family: "Cough Mono", ui-monospace, monospace;
 }
 ```
 
