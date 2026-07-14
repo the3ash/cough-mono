@@ -191,6 +191,7 @@ jobs:
   deploy-cdn:
     needs: release-github
     runs-on: ubuntu-latest
+    environment: cloudflare
     steps:
       - name: Checkout
         uses: actions/checkout@v5
