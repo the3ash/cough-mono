@@ -3,6 +3,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import opentype from "opentype.js";
 
+import { createReleaseManifest } from "./release-metadata.mjs";
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = resolve(root, "dist");
 const fontFiles = [
@@ -37,11 +39,20 @@ const codePoints = [
 const characters = codePoints.map((codePoint) =>
   String.fromCodePoint(codePoint),
 );
-
-await writeFile(
-  resolve(dist, "glyphs.json"),
-  `${JSON.stringify({ count: characters.length, characters }, null, 2)}\n`,
+const packageJson = JSON.parse(
+  await readFile(resolve(root, "package.json"), "utf8"),
 );
+
+await Promise.all([
+  writeFile(
+    resolve(dist, "glyphs.json"),
+    `${JSON.stringify({ count: characters.length, characters }, null, 2)}\n`,
+  ),
+  writeFile(
+    resolve(dist, "manifest.json"),
+    `${JSON.stringify(createReleaseManifest(packageJson.version), null, 2)}\n`,
+  ),
+]);
 
 const css = await readFile(resolve(dist, "cough-mono.css"), "utf8");
 const assetPaths = [...css.matchAll(/url\(["']?([^"')]+)["']?\)/g)].map(
