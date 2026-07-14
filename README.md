@@ -55,7 +55,7 @@ body {
 
 <br>
 
-<img alt="Image" src="https://github.com/user-attachments/assets/b6c7d65b-c9ee-4b07-aac2-a7ee90c6820e" />
+<img alt="Image" src="https://github.com/user-attachments/assets/5d60d6ab-eb19-4a3a-a943-0eaa9d36d7cd" />
 <img alt="Image" src="https://github.com/user-attachments/assets/31d4e221-3ac8-486f-a3c1-4f55d406fafb" />
 <img alt="Image" src="https://github.com/user-attachments/assets/c0177e1c-2e60-4111-8705-5619bcb63fea" />
 <img alt="Image" src="https://github.com/user-attachments/assets/ca08df27-5638-4ac3-b9fa-b3c18c1b187b" />
