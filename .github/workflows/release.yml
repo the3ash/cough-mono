@@ -2,8 +2,11 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
+    paths:
+      - package.json
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,7 +16,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release_required: ${{ steps.release.outputs.release_required }}
+      version: ${{ steps.release.outputs.version }}
+      tag: ${{ steps.release.outputs.tag }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Check release version
+        id: release
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          FORCE_RELEASE: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          if [[ "$FORCE_RELEASE" == "true" ]]; then
+            node scripts/check-release.mjs --force >> "$GITHUB_OUTPUT"
+          else
+            node scripts/check-release.mjs --before "$BEFORE_SHA" >> "$GITHUB_OUTPUT"
+          fi
+
   validate:
+    needs: prepare
+    if: needs.prepare.outputs.release_required == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,20 +69,59 @@ jobs:
           npm ci --ignore-scripts
           python -m pip install "fonttools[woff]==4.63.0"
 
+      - name: Test
+        run: npm test
+
       - name: Validate release versions
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
         run: |
           package_version="$(node -p "require('./package.json').version")"
-          if [[ "$GITHUB_REF_NAME" != "v$package_version" ]]; then
-            echo "::error::Tag $GITHUB_REF_NAME does not match package version $package_version"
+          if [[ "$package_version" != "$VERSION" ]]; then
+            echo "::error::Package version $package_version does not match release version $VERSION"
             exit 1
           fi
-          python scripts/validate-font-versions.py "$package_version"
+          python scripts/validate-font-versions.py "$VERSION"
 
       - name: Inspect npm package
         run: npm pack --dry-run
 
+  tag:
+    needs:
+      - prepare
+      - validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Create annotated tag
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          if git rev-parse --verify "refs/tags/$TAG" >/dev/null 2>&1; then
+            tagged_commit="$(git rev-list -n 1 "$TAG")"
+            if [[ "$tagged_commit" != "$GITHUB_SHA" ]]; then
+              echo "::error::Tag $TAG already points to $tagged_commit"
+              exit 1
+            fi
+            echo "Tag $TAG already points to this commit"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$TAG" -m "Cough Mono $VERSION"
+            git push origin "$TAG"
+          fi
+
   publish-npm:
-    needs: validate
+    needs:
+      - prepare
+      - tag
     runs-on: ubuntu-latest
     environment: npm
     permissions:
@@ -70,10 +143,19 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Publish npm package
-        run: npm publish --provenance --access public
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          if npm view "@the3ash/cough-mono@$VERSION" version >/dev/null 2>&1; then
+            echo "@the3ash/cough-mono@$VERSION is already published"
+          else
+            npm publish --provenance --access public
+          fi
 
   release-github:
-    needs: publish-npm
+    needs:
+      - prepare
+      - publish-npm
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -81,13 +163,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Prepare archive name
-        id: prep
-        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
-
       - name: Package fonts
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
         run: |
-          zip "CoughMono-${{ steps.prep.outputs.version }}.zip" \
+          zip "CoughMono-$VERSION.zip" \
             fonts/CoughMono-Regular.otf \
             fonts/CoughMono-Regular.ttf \
             fonts/CoughMono-Regular.woff2
@@ -95,13 +175,37 @@ jobs:
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          ARCHIVE: CoughMono-${{ steps.prep.outputs.version }}.zip
+          TAG: ${{ needs.prepare.outputs.tag }}
+          VERSION: ${{ needs.prepare.outputs.version }}
         run: |
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" "$ARCHIVE" --clobber
+          archive="CoughMono-$VERSION.zip"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$archive" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" "$ARCHIVE" \
+            gh release create "$TAG" "$archive" \
               --generate-notes \
-              --title "$GITHUB_REF_NAME" \
+              --title "$TAG" \
               --verify-tag
           fi
+
+  deploy-cdn:
+    needs: release-github
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Deploy CDN
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npm run deploy:cdn

@@ -10,6 +10,9 @@
 /glyphs.json
   Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
 
+/manifest.json
+  Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
+
 /fonts/*
   Cache-Control: public, max-age=86400, s-maxage=86400
 
