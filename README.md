@@ -55,10 +55,10 @@ body {
 
 <br>
 
-<img alt="Image" src="https://github.com/user-attachments/assets/d2e5dd1f-24a3-4a03-9dbe-b6d7e501fd9b" />
-<img alt="Image" src="https://github.com/user-attachments/assets/31d4e221-3ac8-486f-a3c1-4f55d406fafb" />
-<img alt="Image" src="https://github.com/user-attachments/assets/c0177e1c-2e60-4111-8705-5619bcb63fea" />
-<img alt="Image" src="https://github.com/user-attachments/assets/ca08df27-5638-4ac3-b9fa-b3c18c1b187b" />
+<img src="https://github.com/user-attachments/assets/b8f6135c-aab1-49e4-8bc7-96018914786e" />
+<img src="https://github.com/user-attachments/assets/0e32b0ec-44a5-4134-adcd-d4c002ad47d1" />
+<img src="https://github.com/user-attachments/assets/c0177e1c-2e60-4111-8705-5619bcb63fea" />
+<img src="https://github.com/user-attachments/assets/ca08df27-5638-4ac3-b9fa-b3c18c1b187b" />
 
 <br>
 
