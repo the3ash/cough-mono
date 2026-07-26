@@ -179,14 +179,27 @@ jobs:
           VERSION: ${{ needs.prepare.outputs.version }}
         run: |
           archive="CoughMono-$VERSION.zip"
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$archive" --clobber
+          if is_draft="$(gh release view "$TAG" --json isDraft --jq '.isDraft' 2>/dev/null)"; then
+            if [[ "$is_draft" == "false" ]]; then
+              if ! gh release view "$TAG" --json assets --jq '.assets[].name' \
+                | grep -Fxq "$archive"; then
+                echo "::error::Published release $TAG is missing immutable asset $archive"
+                exit 1
+              fi
+              echo "Release $TAG is already published with $archive"
+              exit 0
+            fi
+            echo "Resuming draft release $TAG"
           else
-            gh release create "$TAG" "$archive" \
+            gh release create "$TAG" \
+              --draft \
               --generate-notes \
               --title "$TAG" \
               --verify-tag
           fi
+
+          gh release upload "$TAG" "$archive" --clobber
+          gh release edit "$TAG" --draft=false
 
   deploy-cdn:
     needs: release-github
