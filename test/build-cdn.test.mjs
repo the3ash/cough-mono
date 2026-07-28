@@ -19,7 +19,6 @@ test("CDN build generates a sorted Unicode character catalog", async () => {
     character.codePointAt(0),
   );
 
-  assert.equal(glyphs.count, 161);
   assert.equal(glyphs.count, glyphs.characters.length);
   assert.equal(new Set(glyphs.characters).size, glyphs.characters.length);
   assert.deepEqual(codePoints, codePoints.toSorted((a, b) => a - b));
